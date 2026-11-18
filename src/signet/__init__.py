@@ -1,2 +1,4 @@
+from signet.llm import open_chat
+
 def main() -> None:
-    print("Hello from signet!")
+    open_chat()
