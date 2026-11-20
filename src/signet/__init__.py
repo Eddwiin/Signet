@@ -1,4 +1,4 @@
-from signet.llm import read_data_file
+from signet.llm import open_chat
 
 def main() -> None:
-    read_data_file()
+    open_chat()
