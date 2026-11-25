@@ -16,6 +16,7 @@ from qdrant_client.models import Distance, VectorParams
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
+
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 DB_DIR = BASE_DIR / "vector_db"
@@ -104,6 +105,7 @@ def load_documents() -> list[Document]:
             documents.append(doc)
     return documents
 
+@lru_cache
 def load_vectors_store() -> QdrantVectorStore:
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
@@ -161,7 +163,7 @@ def _history_to_messages(history: list[dict]) -> list:
         content = msg["content"] if isinstance(msg["content"], str) else str(msg["content"])
         if msg["role"] == "user":
             messages.append(HumanMessage(content=content))
-        elif msg["role"] == "assistance":
+        elif msg["role"] == "assistant":
             messages.append(AIMessage(content=content))
     return messages
 
